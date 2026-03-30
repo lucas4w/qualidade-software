@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "642437423504",
+    "project_id": "rn-semfila",
+    "storage_bucket": "rn-semfila.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642437423504:android:23282008f63250d926d315",
+        "android_client_info": {
+          "package_name": "com.example.flutterapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDO6Y_vpRWhkIVA9tD2s02kDcRDJluHKC8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
