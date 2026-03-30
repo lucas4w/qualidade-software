@@ -1,0 +1,34 @@
+{
+  "name": "Flutter",  
+  "image": "ghcr.io/cirruslabs/flutter:stable",
+  
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "Dart-Code.flutter",
+        "Dart-Code.dart-code",
+      ],
+      "settings": {
+        "dart.sdkPath": "/flutter/bin/cache/dart-sdk",
+        "dart.flutterSdkPath": "/flutter",
+        "dart.showDartDeveloperLogs": true,
+        "[dart]": {
+          "editor.formatOnSave": true,
+          "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit"
+          }
+        },
+        "editor.tabSize": 2,
+        "files.exclude": {
+          "**/.pub-cache": true
+        }
+      }
+    }
+  },
+
+  "postCreateCommand": "flutter doctor -v && flutter pub get",
+  
+  "containerEnv": {
+    "FLUTTER_ROOT": "/flutter"
+  }
+}
