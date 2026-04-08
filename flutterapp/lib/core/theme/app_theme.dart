@@ -9,7 +9,7 @@ class AppTheme {
     textTheme: GoogleFonts.montserratTextTheme(),
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: AppPallete.primary,
-      selectionColor: Colors.grey.withOpacity(0.4),
+      selectionColor: Colors.grey.withValues(alpha: 0.4),
       selectionHandleColor: Colors.grey,
     ),
   );
