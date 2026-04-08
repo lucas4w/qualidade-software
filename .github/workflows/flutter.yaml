@@ -1,0 +1,43 @@
+name: Flutter CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '^3.9.2' 
+          channel: 'stable'
+          cache: true 
+
+      - name: instala dependencias
+        run: flutter pub get
+
+      - name: verifica formatação
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: analisa código
+        run: flutter analyze
+
+      - name: roda testes
+        run: flutter test
+
+      - name: build apk
+        run: flutter build apk --debug
