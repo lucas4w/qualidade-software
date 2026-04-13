@@ -23,7 +23,6 @@ class _NotificacoesPageState extends State<NotificacoesPage> {
     super.initState();
     _buscarDados();
     _subscription = NotificacoesController.onNovaNotificacao.stream.listen((_) {
-      print('--- PÁGINA OUVIU NOVA NOTIFICAÇÃO ---');
       _buscarDados();
     });
   }

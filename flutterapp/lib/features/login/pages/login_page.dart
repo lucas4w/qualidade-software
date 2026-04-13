@@ -55,7 +55,6 @@ class _LoginPageState extends State<LoginPage> {
         setState(() {
           errorMessage = e.toString().replaceFirst('Exception: ', '');
         });
-        print(errorMessage);
       }
     } finally {
       if (mounted) {
