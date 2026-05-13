@@ -53,5 +53,4 @@ class FilaService {
   }
 }
 
-
 // http://localhost:8000/api/usuario/198/fila/fila_225_20251230_010754/status/
