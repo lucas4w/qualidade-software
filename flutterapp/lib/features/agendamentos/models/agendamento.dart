@@ -26,5 +26,6 @@ class Agendamento {
     );
   }
 }
+
 // "id":1392,"medico_nome":"Joao Silva","data_atendimento":"2025-12-24",
 // "hora_agendamento":"11:30:00","fila_id":null}
