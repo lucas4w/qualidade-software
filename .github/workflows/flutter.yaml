@@ -41,3 +41,6 @@ jobs:
 
       - name: build apk
         run: flutter build apk --debug
+      
+      - name: verificar formatação
+        run: dart format --output=set-exit-code .

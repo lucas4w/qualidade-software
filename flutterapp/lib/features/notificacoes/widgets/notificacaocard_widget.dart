@@ -48,6 +48,15 @@ class _NotificacaoCardState extends State<NotificacaoCard> {
           child: Row(
             children: [
               if (!_lida) Container(width: 6, color: AppPallete.primary),
+              SizedBox(
+                height: 30,
+                width: 30,
+                child: Icon(
+                  Icons.notifications,
+                  size: 20,
+                  color: AppPallete.primary,
+                ),
+              ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(14),
