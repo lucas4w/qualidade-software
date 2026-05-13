@@ -37,7 +37,7 @@ jobs:
         run: dart format .
 
       - name: verificar formatação
-        run: dart format --output=set-exit-code .
+        run: dart format --output=none --set-exit-if-changed .
 
       - name: analisa código
         run: flutter analyze
