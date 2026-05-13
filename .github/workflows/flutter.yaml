@@ -34,7 +34,7 @@ jobs:
         run: flutter pub get
 
       - name: formatar codigo
-        run: flutter format .
+        run: dart format .
 
       - name: verificar formatação
         run: dart format --output=set-exit-code .
