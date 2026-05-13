@@ -41,8 +41,7 @@ class _NotificacaoCardState extends State<NotificacaoCard> {
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           border: Border.all(color: Colors.grey.shade300),
-          borderRadius: BorderRadius.circular(12),
-          color: Colors.white,
+          borderRadius: BorderRadius.circular(12), color: Colors.white,
         ),
         child: IntrinsicHeight(
           child: Row(
