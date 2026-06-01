@@ -5,7 +5,6 @@ import 'package:flutterapp/features/fila/services/fila_service.dart';
 import 'package:flutterapp/features/fila/widgets/foradafila_widget.dart';
 import 'package:flutterapp/features/fila/widgets/nafila_widget.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class FilaPage extends StatefulWidget {
   final String id;
