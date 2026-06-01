@@ -27,6 +27,12 @@
     }
   },
 
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    }
+  },
+
   "postCreateCommand": "flutter doctor -v && flutter pub get",
   
   "containerEnv": {
