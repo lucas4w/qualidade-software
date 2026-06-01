@@ -39,6 +39,9 @@ jobs:
       - name: analisa código
         run: flutter analyze
 
+      - name: verificar código duplicado
+        run: npx jscpd ./lib --ignore "**/*.g.dart,**/*.freezed.dart"
+
       - name: roda testes
         run: flutter test
 
