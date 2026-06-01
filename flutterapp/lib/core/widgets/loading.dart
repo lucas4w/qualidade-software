@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutterapp/core/theme/pallete.dart';
 
-Widget errorWidget(
-  String? content,
-  VoidCallback retryCallback,
-) {
+Widget errorWidget(String? content, VoidCallback retryCallback) {
   return Center(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
