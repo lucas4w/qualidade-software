@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/core/theme/pallete.dart';
+import 'package:flutterapp/core/widgets/carregamento_mixin.dart';
+import 'package:flutterapp/core/widgets/retry_button.dart';
 import 'package:flutterapp/features/notificacoes/models/notificacao.dart';
 import 'package:flutterapp/features/notificacoes/services/notificacoes_service.dart';
 import 'package:flutterapp/features/notificacoes/widgets/notificacaocard_widget.dart';
+import 'package:flutterapp/core/widgets/loading.dart';
 
 class NotificacoesPage extends StatefulWidget {
   const NotificacoesPage({super.key});
@@ -12,11 +15,10 @@ class NotificacoesPage extends StatefulWidget {
   State<NotificacoesPage> createState() => _NotificacoesPageState();
 }
 
-class _NotificacoesPageState extends State<NotificacoesPage> {
+class _NotificacoesPageState extends State<NotificacoesPage>
+    with CarregamentoMixin {
   StreamSubscription? _subscription;
   List<Notificacao>? _notificacoes;
-  bool _isLoading = true;
-  bool _hasError = false;
 
   @override
   void initState() {
@@ -34,21 +36,18 @@ class _NotificacoesPageState extends State<NotificacoesPage> {
   }
 
   Future<void> _buscarDados() async {
-    setState(() {
-      _isLoading = true;
-      _hasError = false;
-    });
+    iniciarCarregamento();
 
     try {
       final dados = await NotificacoesService.buscarNotificacoes();
       setState(() {
         _notificacoes = dados;
-        _isLoading = false;
+        isLoading = false;
       });
     } catch (e) {
       setState(() {
-        _isLoading = false;
-        _hasError = true;
+        isLoading = false;
+        hasError = true;
       });
     }
   }
@@ -130,60 +129,14 @@ class _NotificacoesPageState extends State<NotificacoesPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: _isLoading
+      body: isLoading
           ? const Center(
               child: CircularProgressIndicator(color: AppPallete.primary),
             )
-          : _hasError
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.error_outline, size: 64, color: Colors.grey),
-                  const SizedBox(height: 16),
-                  const Text('Falha ao carregar as notificações'),
-                  const SizedBox(height: 16),
-                  FilledButton(
-                    onPressed: _buscarDados,
-                    style: FilledButton.styleFrom(
-                      backgroundColor: AppPallete.primary,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.refresh_rounded),
-                        SizedBox(width: 8),
-                        Text('Tentar novamente'),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            )
+          : hasError
+          ? errorWidget('Falha ao carregar as notificações', _buscarDados)
           : _notificacoes == null || _notificacoes!.isEmpty
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Nenhuma notificação no momento'),
-                  const SizedBox(height: 16),
-                  FilledButton(
-                    onPressed: _buscarDados,
-                    style: FilledButton.styleFrom(
-                      backgroundColor: AppPallete.primary,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.refresh_rounded),
-                        SizedBox(width: 8),
-                        Text('Atualizar'),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            )
+          ? retryButton(_buscarDados)
           : RefreshIndicator(
               onRefresh: _buscarDados,
               color: AppPallete.primary,

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/core/theme/pallete.dart';
+import 'package:flutterapp/core/widgets/loading.dart';
 import 'package:flutterapp/features/agendamentos/models/agendamento.dart';
 import 'package:flutterapp/features/agendamentos/services/agendamento_service.dart';
 import 'package:flutterapp/features/agendamentos/widgets/agendamentocard_widget.dart';
+import 'package:flutterapp/core/widgets/carregamento_mixin.dart';
+import 'package:flutterapp/core/widgets/retry_button.dart';
 
 class AgendamentosPage extends StatefulWidget {
   const AgendamentosPage({super.key});
@@ -11,10 +14,9 @@ class AgendamentosPage extends StatefulWidget {
   State<AgendamentosPage> createState() => _AgendamentosPageState();
 }
 
-class _AgendamentosPageState extends State<AgendamentosPage> {
+class _AgendamentosPageState extends State<AgendamentosPage>
+    with CarregamentoMixin {
   List<Agendamento>? _agendamentos;
-  bool _isLoading = true;
-  bool _hasError = false;
 
   @override
   void initState() {
@@ -23,10 +25,7 @@ class _AgendamentosPageState extends State<AgendamentosPage> {
   }
 
   Future<void> _buscarDados() async {
-    setState(() {
-      _isLoading = true;
-      _hasError = false;
-    });
+    iniciarCarregamento();
 
     try {
       final dados = await AgendamentoService.buscarAgendamentos();
@@ -42,19 +41,19 @@ class _AgendamentosPageState extends State<AgendamentosPage> {
       }
       setState(() {
         _agendamentos = dados;
-        _isLoading = false;
+        isLoading = false;
       });
     } catch (e) {
       setState(() {
-        _isLoading = false;
-        _hasError = true;
+        isLoading = false;
+        hasError = true;
       });
     }
   }
 
   Future<void> cancelarAgendamento(int id) async {
     setState(() {
-      _isLoading = true;
+      isLoading = true;
     });
 
     try {
@@ -72,7 +71,7 @@ class _AgendamentosPageState extends State<AgendamentosPage> {
       }
     } finally {
       setState(() {
-        _isLoading = false;
+        isLoading = false;
       });
     }
   }
@@ -87,60 +86,14 @@ class _AgendamentosPageState extends State<AgendamentosPage> {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
         ),
       ),
-      body: _isLoading
+      body: isLoading
           ? const Center(
               child: CircularProgressIndicator(color: AppPallete.primary),
             )
-          : _hasError
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.error_outline, size: 64, color: Colors.grey),
-                  const SizedBox(height: 16),
-                  const Text('Falha ao carregar os agendamentos'),
-                  const SizedBox(height: 16),
-                  FilledButton(
-                    onPressed: _buscarDados,
-                    style: FilledButton.styleFrom(
-                      backgroundColor: AppPallete.primary,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.refresh_rounded),
-                        SizedBox(width: 8),
-                        Text('Tentar novamente'),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            )
+          : hasError
+          ? errorWidget('Falha ao carregar os agendamentos', _buscarDados)
           : _agendamentos == null || _agendamentos!.isEmpty
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Nenhum agendamento marcado'),
-                  const SizedBox(height: 16),
-                  FilledButton(
-                    onPressed: _buscarDados,
-                    style: FilledButton.styleFrom(
-                      backgroundColor: AppPallete.primary,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.refresh_rounded),
-                        SizedBox(width: 8),
-                        Text('Atualizar'),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            )
+          ? retryButton(_buscarDados)
           : RefreshIndicator(
               onRefresh: _buscarDados,
               color: AppPallete.primary,
