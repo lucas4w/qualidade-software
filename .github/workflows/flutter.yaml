@@ -40,7 +40,7 @@ jobs:
         run: flutter analyze
 
       - name: verificar código duplicado
-        run: npx jscpd ./lib --ignore "**/*.g.dart,**/*.freezed.dart"
+        run: npx jscpd ./lib --threshold 0
 
       - name: roda testes
         run: flutter test
