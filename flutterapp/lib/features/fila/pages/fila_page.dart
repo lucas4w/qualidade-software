@@ -5,7 +5,6 @@ import 'package:flutterapp/features/fila/services/fila_service.dart';
 import 'package:flutterapp/features/fila/widgets/foradafila_widget.dart';
 import 'package:flutterapp/features/fila/widgets/nafila_widget.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class FilaPage extends StatefulWidget {
   final String id;
@@ -88,23 +87,7 @@ class _FilaPageState extends State<FilaPage> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => context.pop(),
         ),
-        title: RichText(
-          text: TextSpan(
-            children: <TextSpan>[
-              TextSpan(
-                text: 'RN ',
-                style: GoogleFonts.poppins(color: Colors.black, fontSize: 26),
-              ),
-              TextSpan(
-                text: 'SemFila',
-                style: GoogleFonts.poppins(
-                  color: AppPallete.primary,
-                  fontSize: 26,
-                ),
-              ),
-            ],
-          ),
-        ),
+        title: getLogo(),
         centerTitle: true,
       ),
       body: RefreshIndicator(

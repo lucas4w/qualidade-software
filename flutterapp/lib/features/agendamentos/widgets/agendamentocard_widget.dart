@@ -3,6 +3,7 @@ import 'package:flutterapp/core/theme/pallete.dart';
 import 'package:flutterapp/features/agendamentos/models/agendamento.dart';
 import 'package:intl/intl.dart';
 import 'package:flutterapp/core/routing/app_routing.dart';
+import 'package:flutterapp/core/theme/filled_button_style.dart';
 
 class AgendamentoCard extends StatelessWidget {
   final Agendamento agendamento;
@@ -12,6 +13,47 @@ class AgendamentoCard extends StatelessWidget {
     required this.agendamento,
     required this.onCancel,
   });
+
+  Container getContainer(IconData icon, String label) {
+    return Container(
+      height: 80,
+      width: 130,
+      padding: EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        border: BoxBorder.all(color: Colors.grey.shade300, width: 1),
+        borderRadius: BorderRadius.circular(8),
+        color: const Color.fromARGB(255, 251, 252, 253),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              color: Color.fromARGB(255, 112, 119, 136),
+              fontWeight: FontWeight.bold,
+              fontSize: 13,
+            ),
+          ),
+          SizedBox(height: 7),
+          Row(
+            children: [
+              Icon(icon, size: 18, color: Color.fromARGB(255, 112, 119, 136)),
+              SizedBox(width: 5),
+              Text(
+                label == 'Data'
+                    ? DateFormat(
+                        'dd/MM/yyyy',
+                      ).format(agendamento.dataAtendimento)
+                    : DateFormat('HH:mm').format(agendamento.horaAgendamento),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 
   bool filaEstaAtiva() {
     return agendamento.filaID != null;
@@ -110,98 +152,8 @@ class AgendamentoCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Container(
-                    height: 80,
-                    width: 130,
-                    padding: EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      border: BoxBorder.all(
-                        color: Colors.grey.shade300,
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                      color: const Color.fromARGB(255, 251, 252, 253),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Data',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 112, 119, 136),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13,
-                          ),
-                        ),
-                        SizedBox(height: 7),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.calendar_today_outlined,
-                              size: 18,
-                              color: Color.fromARGB(255, 112, 119, 136),
-                            ),
-                            SizedBox(width: 5),
-                            Text(
-                              DateFormat(
-                                'dd/MM/yyyy',
-                              ).format(agendamento.dataAtendimento),
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: 80,
-                    width: 145,
-                    padding: EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      border: BoxBorder.all(
-                        color: Colors.grey.shade300,
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                      color: const Color.fromARGB(255, 251, 252, 253),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Horário previsto',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 112, 119, 136),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13,
-                          ),
-                        ),
-                        SizedBox(height: 7),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.access_time_outlined,
-                              size: 18,
-                              color: Color.fromARGB(255, 112, 119, 136),
-                            ),
-                            SizedBox(width: 4),
-                            Text(
-                              DateFormat(
-                                'HH:mm',
-                              ).format(agendamento.horaAgendamento),
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                  getContainer(Icons.calendar_today_outlined, 'Data'),
+                  getContainer(Icons.access_time_outlined, 'Hora'),
                 ],
               ),
               SizedBox(height: 20),
@@ -247,11 +199,17 @@ class AgendamentoCard extends StatelessWidget {
                             },
                             child: const Text(
                               'Confirmar',
-                              style: TextStyle(color: AppPallete.danger),
+                              style: TextStyle(
+                                color: AppPallete.danger,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                           TextButton(
                             onPressed: () => Navigator.pop(context),
+                            style: TextButton.styleFrom(
+                              foregroundColor: AppPallete.primary,
+                            ),
                             child: const Text('Voltar'),
                           ),
                         ],
@@ -259,24 +217,8 @@ class AgendamentoCard extends StatelessWidget {
                     },
                   );
                 },
-                style: FilledButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  backgroundColor: AppPallete.danger,
-                  shape: ContinuousRectangleBorder(
-                    borderRadius: BorderRadius.circular(22),
-                  ),
-                ),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.close),
-                    SizedBox(width: 2),
-                    Text(
-                      'Cancelar agendamento',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
+                style: filledButtonStyle(),
+                child: getRow('Cancelar agendamento', Icons.cancel_outlined),
               ),
             ],
           ),

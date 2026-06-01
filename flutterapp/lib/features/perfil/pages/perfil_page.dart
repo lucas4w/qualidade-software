@@ -8,6 +8,8 @@ import 'package:flutterapp/core/theme/pallete.dart';
 import 'package:flutterapp/features/perfil/models/perfil.dart';
 import 'package:flutterapp/features/perfil/services/perfil_service.dart';
 import 'package:intl/intl.dart';
+import 'package:flutterapp/core/theme/filled_button_style.dart';
+import 'package:flutterapp/core/widgets/carregamento_mixin.dart';
 
 class PerfilPage extends StatefulWidget {
   const PerfilPage({super.key});
@@ -16,7 +18,7 @@ class PerfilPage extends StatefulWidget {
   State<PerfilPage> createState() => _PerfilPageState();
 }
 
-class _PerfilPageState extends State<PerfilPage> {
+class _PerfilPageState extends State<PerfilPage> with CarregamentoMixin {
   Perfil? _perfil;
   bool _isLoading = true;
   bool _hasError = false;
@@ -28,10 +30,7 @@ class _PerfilPageState extends State<PerfilPage> {
   }
 
   Future<void> _buscarDados() async {
-    setState(() {
-      _isLoading = true;
-      _hasError = false;
-    });
+    iniciarCarregamento();
 
     try {
       final dados = await PerfilService.buscarPerfil();
@@ -83,19 +82,7 @@ class _PerfilPageState extends State<PerfilPage> {
             child: Icon(icone, size: 24, color: AppPallete.primary),
           ),
           SizedBox(width: 12),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                label,
-                style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
-              ),
-              Text(
-                content ?? '-',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
+          getColumn(label, content),
         ],
       ),
     );
@@ -173,48 +160,12 @@ class _PerfilPageState extends State<PerfilPage> {
                         _perfil?.nomeCompleto,
                       ),
                       SizedBox(height: 12),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Color.fromARGB(255, 248, 250, 252),
-                          border: Border.all(color: Colors.grey.shade200),
-                        ),
-                        padding: EdgeInsets.all(10),
-                        child: Row(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                color: const Color.fromARGB(255, 217, 245, 242),
-                              ),
-                              padding: EdgeInsets.all(10),
-                              child: Icon(
-                                Icons.calendar_today_outlined,
-                                size: 24,
-                                color: AppPallete.primary,
-                              ),
-                            ),
-                            SizedBox(width: 12),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Data de nascimento',
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.grey.shade600,
-                                  ),
-                                ),
-                                Text(
-                                  DateFormat(
-                                    'dd/MM/yyyy',
-                                  ).format(_perfil!.dataNascimento),
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                      getContainer(
+                        Icons.calendar_today_outlined,
+                        'Data de nascimento',
+                        DateFormat(
+                          'dd/MM/yyyy',
+                        ).format(_perfil!.dataNascimento),
                       ),
                       SizedBox(height: 12),
                       getContainer(
@@ -256,24 +207,8 @@ class _PerfilPageState extends State<PerfilPage> {
                             },
                           );
                         },
-                        style: FilledButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          backgroundColor: AppPallete.danger,
-                          shape: ContinuousRectangleBorder(
-                            borderRadius: BorderRadius.circular(22),
-                          ),
-                        ),
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.logout_rounded),
-                            SizedBox(width: 2),
-                            Text(
-                              'Sair',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
+                        style: filledButtonStyle(),
+                        child: getRow('Sair da conta', Icons.logout_outlined),
                       ),
                     ],
                   ),

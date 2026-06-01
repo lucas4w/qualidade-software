@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/core/theme/pallete.dart';
 import 'package:flutterapp/features/fila/models/status.dart';
+import 'package:flutterapp/core/theme/filled_button_style.dart';
 
 class NafilaWidget extends StatelessWidget {
   final Status? status;
@@ -23,6 +24,13 @@ class NafilaWidget extends StatelessWidget {
         (totalPessoasFila - (posicaoAtual - 1)) / totalPessoasFila;
 
     return progresso;
+  }
+
+  Widget backButton(BuildContext context) {
+    return TextButton(
+      onPressed: () => Navigator.pop(context),
+      child: const Text('Voltar'),
+    );
   }
 
   @override
@@ -165,10 +173,7 @@ class NafilaWidget extends StatelessWidget {
                                   style: TextStyle(color: AppPallete.danger),
                                 ),
                               ),
-                              TextButton(
-                                onPressed: () => Navigator.pop(context),
-                                child: const Text('Voltar'),
-                              ),
+                              backButton(context),
                             ],
                           );
                         },
@@ -215,22 +220,13 @@ class NafilaWidget extends StatelessWidget {
                             style: TextStyle(color: AppPallete.danger),
                           ),
                         ),
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: const Text('Voltar'),
-                        ),
+                        backButton(context),
                       ],
                     );
                   },
                 );
               },
-              style: FilledButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                backgroundColor: AppPallete.danger,
-                shape: ContinuousRectangleBorder(
-                  borderRadius: BorderRadius.circular(22),
-                ),
-              ),
+              style: filledButtonStyle(),
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

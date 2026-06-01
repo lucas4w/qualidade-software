@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutterapp/core/theme/pallete.dart';
 import 'package:flutterapp/features/notificacoes/services/notificacoes_service.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class MainShell extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
@@ -22,23 +21,7 @@ class MainShell extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         surfaceTintColor: Colors.transparent,
-        title: RichText(
-          text: TextSpan(
-            children: <TextSpan>[
-              TextSpan(
-                text: 'RN ',
-                style: GoogleFonts.poppins(color: Colors.black, fontSize: 26),
-              ),
-              TextSpan(
-                text: 'SemFila',
-                style: GoogleFonts.poppins(
-                  color: AppPallete.primary,
-                  fontSize: 26,
-                ),
-              ),
-            ],
-          ),
-        ),
+        title: getLogo(),
       ),
       body: navigationShell,
       bottomNavigationBar: BottomNavigationBar(

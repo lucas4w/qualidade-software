@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppPallete {
   static const Color backgroundColor = Color.fromARGB(255, 243, 244, 246);
@@ -12,4 +13,21 @@ class AppPallete {
   // static const Color greyColor = Colors.grey;
   // static const Color errorColor =s Colors.redAccent;
   // static const Color transparentColor = Colors.transparent;
+}
+
+RichText getLogo() {
+  return RichText(
+    text: TextSpan(
+      children: <TextSpan>[
+        TextSpan(
+          text: 'RN ',
+          style: GoogleFonts.poppins(color: Colors.black, fontSize: 26),
+        ),
+        TextSpan(
+          text: 'SemFila',
+          style: GoogleFonts.poppins(color: AppPallete.primary, fontSize: 26),
+        ),
+      ],
+    ),
+  );
 }

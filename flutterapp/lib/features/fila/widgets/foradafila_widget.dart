@@ -24,6 +24,14 @@ class ForaDaFilaWidget extends StatelessWidget {
     );
   }
 
+  BoxDecoration getBoxDecoration() {
+    return BoxDecoration(
+      color: Color.fromARGB(255, 239, 246, 255),
+      border: Border.all(color: Color.fromARGB(255, 211, 231, 255)),
+      borderRadius: BorderRadius.circular(12),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -55,11 +63,7 @@ class ForaDaFilaWidget extends StatelessWidget {
             ),
             SizedBox(height: 27),
             Container(
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 239, 246, 255),
-                border: Border.all(color: Color.fromARGB(255, 211, 231, 255)),
-                borderRadius: BorderRadius.circular(12),
-              ),
+              decoration: getBoxDecoration(),
               padding: EdgeInsets.all(12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,11 +181,7 @@ class ForaDaFilaWidget extends StatelessWidget {
             ),
             SizedBox(height: 18),
             Container(
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 239, 246, 255),
-                border: Border.all(color: Color.fromARGB(255, 211, 231, 255)),
-                borderRadius: BorderRadius.circular(12),
-              ),
+              decoration: getBoxDecoration(),
               padding: EdgeInsets.all(12),
               child: RichText(
                 text: TextSpan(
