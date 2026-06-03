@@ -43,13 +43,13 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y graphviz plantuml
 
       - name: gerar a imagem do diagrama
-        run: plantuml diagrama.puml
+        run: plantuml -tsvg diagrama.puml
 
       - name: salvar imagem do diagrama como artefato
         uses: actions/upload-artifact@v4
         with:
           name: diagrama-classes-uml
-          path: flutterapp/diagrama.png
+          path: flutterapp/diagrama.svg
 
       - name: verificar formatação
         run: dart format --output=none --set-exit-if-changed .
