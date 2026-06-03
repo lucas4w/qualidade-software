@@ -33,6 +33,24 @@ jobs:
       - name: instala dependencias
         run: flutter pub get
 
+      - name: instalar DCDG
+        run: dart pub global activate dcdg
+
+      - name: gerar estrutura do diagrama de classes
+        run: dart pub global run dcdg -o diagrama.puml
+
+      - name: instalar Graphviz e PlantUML no runner
+        run: sudo apt-get update && sudo apt-get install -y graphviz plantuml
+
+      - name: gerar a imagem do diagrama
+        run: plantuml -tsvg diagrama.puml
+
+      - name: salvar imagem do diagrama como artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagrama-classes-uml
+          path: flutterapp/diagrama.svg
+
       - name: verificar formatação
         run: dart format --output=none --set-exit-if-changed .
 
