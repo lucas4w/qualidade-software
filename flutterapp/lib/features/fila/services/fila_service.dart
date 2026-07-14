@@ -9,7 +9,9 @@ class FilaService {
   static Future<Status> buscarStatus(String idFila) async {
     final id = await AuthService().getUserIDLogado();
     try {
-      final response = await _dio.get<Status>('usuario/$id/fila/$idFila/status/');
+      final response = await _dio.get<Status>(
+        'usuario/$id/fila/$idFila/status/',
+      );
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> result =

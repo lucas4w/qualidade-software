@@ -28,14 +28,14 @@ class NotificationService {
         return;
       }
 
-      final Response<Map<String, dynamic>> response =
-          await ApiClient.instance.post<Map<String, dynamic>>(
-        'tokens-dispositivo/',
-        data: {
-          'token_dispositivo': token,
-          'paciente': int.tryParse(pacienteId) ?? pacienteId,
-        },
-      );
+      final Response<Map<String, dynamic>> response = await ApiClient.instance
+          .post<Map<String, dynamic>>(
+            'tokens-dispositivo/',
+            data: {
+              'token_dispositivo': token,
+              'paciente': int.tryParse(pacienteId) ?? pacienteId,
+            },
+          );
       final int? dispositivoId = response.data?['id'] as int?;
       if (dispositivoId == null) {
         debugPrint('ID do dispositivo retornado pelo backend é nulo');
