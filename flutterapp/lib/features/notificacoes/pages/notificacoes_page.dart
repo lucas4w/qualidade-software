@@ -17,7 +17,7 @@ class NotificacoesPage extends StatefulWidget {
 
 class _NotificacoesPageState extends State<NotificacoesPage>
     with CarregamentoMixin {
-  StreamSubscription? _subscription;
+  StreamSubscription<dynamic>? _subscription;
   List<Notificacao>? _notificacoes;
 
   @override

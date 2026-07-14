@@ -19,13 +19,13 @@ class Notificacao {
 
   factory Notificacao.fromJson(Map<String, dynamic> json) {
     return Notificacao(
-      id: json['id'],
-      tipo: json['tipo'],
-      titulo: json['titulo'],
-      mensagem: json['mensagem'],
-      dataEnvio: DateTime.parse(json['data_envio']),
-      tempoRelativo: json['tempo_relativo'] ?? '',
-      lida: json['lida'],
+      id: json['id'] as int,
+      tipo: json['tipo'] as String,
+      titulo: json['titulo'] as String,
+      mensagem: json['mensagem'] as String,
+      dataEnvio: DateTime.parse(json['data_envio'] as String),
+      tempoRelativo: json['tempo_relativo'] as String,
+      lida: json['lida'] as bool,
     );
   }
 }

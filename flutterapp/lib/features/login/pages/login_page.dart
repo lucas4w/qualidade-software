@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
 
   String? errorMessage;
 
-  _validate() => (value) {
+  FormFieldValidator<String> _validate() => (value) {
     if (value == null || value.isEmpty) {
       return 'Campo obrigatório';
     }

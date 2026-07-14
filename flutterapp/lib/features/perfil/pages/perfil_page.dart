@@ -51,7 +51,7 @@ class _PerfilPageState extends State<PerfilPage> with CarregamentoMixin {
 
     if (dispositivoId != null) {
       try {
-        await ApiClient.instance.delete('tokens-dispositivo/$dispositivoId/');
+        await ApiClient.instance.delete<void>('dispositivos/$dispositivoId/');
         debugPrint('Token removido do backend (ID: $dispositivoId)');
       } catch (e) {
         debugPrint('Erro ao remover token do backend: $e');
@@ -180,9 +180,9 @@ class _PerfilPageState extends State<PerfilPage> with CarregamentoMixin {
                       SizedBox(height: 32),
                       FilledButton(
                         onPressed: () {
-                          showDialog(
+                          showDialog<void>(
                             context: context,
-                            builder: (BuildContext context) {
+                            builder: (context) {
                               return AlertDialog(
                                 title: const Text('Sair'),
                                 content: const Text(

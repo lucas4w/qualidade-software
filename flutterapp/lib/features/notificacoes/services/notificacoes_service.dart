@@ -12,12 +12,19 @@ class NotificacoesService {
 
   static Future<List<Notificacao>> buscarNotificacoes() async {
     try {
-      final response = await _dio.get('notificacoes/');
+      final response = await _dio.get<Map<String, dynamic>>('notificacoes/');
       NotificacoesController.sincronizarContagem();
 
       if (response.statusCode == 200) {
-        final List<dynamic> results = response.data['results'];
-        return results.map((json) => Notificacao.fromJson(json)).toList();
+        final Map<String, dynamic>? data = response.data;
+        final List<dynamic> results =
+            (data?['results'] as List<dynamic>?) ?? [];
+        return results
+            .map(
+              (dynamic json) =>
+                  Notificacao.fromJson(json as Map<String, dynamic>),
+            )
+            .toList();
       } else {
         throw Exception('Erro ao carregar notificações');
       }
@@ -27,23 +34,32 @@ class NotificacoesService {
   }
 
   static Future<void> marcarComoLida(int id) async {
-    await _dio.patch('notificacoes/$id/', data: {'lida': true});
+    await _dio.patch<Map<String, dynamic>>(
+      'notificacoes/$id/',
+      data: {'lida': true},
+    );
     NotificacoesController.decrementar();
   }
 
   static Future<void> apagarNotificacao(int id) async {
-    await _dio.delete('notificacoes/$id/');
+    await _dio.delete<Map<String, dynamic>>('notificacoes/$id/');
     NotificacoesController.sincronizarContagem();
   }
 
   static Future<void> apagarTodas() async {
-    await _dio.delete('notificacoes/limpar-todas/');
+    await _dio.delete<Map<String, dynamic>>('notificacoes/limpar-todas/');
     NotificacoesController.zerar();
   }
 
   static Future<int> getNaoLidas() async {
-    final response = await _dio.get('notificacoes/nao-lidas/');
-    return response.data['count'];
+    final response = await _dio.get<Map<String, dynamic>>(
+      'notificacoes/nao-lidas/',
+    );
+    final countValue = response.data?['count'];
+    if (countValue == null) {
+      return 0;
+    }
+    return countValue is int ? countValue : int.parse(countValue.toString());
   }
 }
 

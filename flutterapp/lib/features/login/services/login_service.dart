@@ -7,12 +7,12 @@ class LoginService {
 
   static Future<void> login(String username, String password) async {
     try {
-      final response = await _dio.post(
+      final response = await _dio.post<Map<String, dynamic>>(
         'token/',
         data: {'username': username, 'password': password},
       );
-      final String accessToken = response.data['access'];
-      final String refreshToken = response.data['refresh'];
+      final String accessToken = response.data?['access'] as String? ?? '';
+      final String refreshToken = response.data?['refresh'] as String? ?? '';
 
       if (accessToken.isEmpty) {
         throw Exception('Access token não encontrado na resposta');

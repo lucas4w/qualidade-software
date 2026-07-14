@@ -28,16 +28,20 @@ class NotificationService {
         return;
       }
 
-      final response = await ApiClient.instance.post(
+      final Response<Map<String, dynamic>> response =
+          await ApiClient.instance.post<Map<String, dynamic>>(
         'tokens-dispositivo/',
         data: {
           'token_dispositivo': token,
           'paciente': int.tryParse(pacienteId) ?? pacienteId,
         },
       );
-      final int dispositivoId = response.data['id']; // ← Captura o ID
+      final int? dispositivoId = response.data?['id'] as int?;
+      if (dispositivoId == null) {
+        debugPrint('ID do dispositivo retornado pelo backend é nulo');
+        return;
+      }
 
-      // Atualiza o banco local com o novo dispositivoId
       final String? userID = await AuthService().getUserIDLogado();
       if (userID != null) {
         await AuthService().salvarUsuarioLogado(
@@ -83,7 +87,7 @@ class NotificationService {
         token = await FirebaseMessaging.instance.getToken();
       } catch (e) {
         retryCount++;
-        await Future.delayed(Duration(seconds: 2));
+        await Future<void>.delayed(const Duration(seconds: 2));
       }
     }
     if (token != null) {
@@ -96,7 +100,7 @@ class NotificationService {
       await _enviarTokenParaServidor(newToken);
     });
 
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    FirebaseMessaging.onMessage.listen((message) {
       debugPrint('notificação recebida em foreground');
       debugPrint('Título: ${message.notification?.title}');
       debugPrint('Corpo: ${message.notification?.body}');
@@ -134,7 +138,7 @@ class NotificationService {
       }
     });
 
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
       debugPrint('usuário abriu o app tocando na notificação');
       debugPrint('Dados: ${message.data}');
     });

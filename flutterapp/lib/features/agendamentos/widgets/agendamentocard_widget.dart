@@ -183,9 +183,9 @@ class AgendamentoCard extends StatelessWidget {
               SizedBox(height: 13),
               FilledButton(
                 onPressed: () {
-                  showDialog(
+                  showDialog<void>(
                     context: context,
-                    builder: (BuildContext context) {
+                    builder: (context) {
                       return AlertDialog(
                         title: const Text('Confirmar cancelamento'),
                         content: const Text(
