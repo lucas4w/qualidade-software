@@ -48,21 +48,37 @@ class _FilaPageState extends State<FilaPage> {
   }
 
   void pularVez(String? id) async {
+    if (id == null) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('ID da fila inválido')),
+        );
+      }
+      return;
+    }
+
     bool success = await FilaService.pularVez(id);
     if (success) {
-      setState(() {
-        _buscarDados();
-      });
+      setState(_buscarDados);
     } else {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text('Erro ao pular vez')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Erro ao pular vez')),
+        );
       }
     }
   }
 
   void sairDaFila(String? id) async {
+    if (id == null) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('ID inválido')),
+        );
+      }
+      return;
+    }
+
     bool success = await FilaService.sairDaFila(id);
     if (success) {
       if (mounted) {
@@ -72,9 +88,9 @@ class _FilaPageState extends State<FilaPage> {
       }
     } else {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text('Erro ao pular vez')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Erro ao pular vez')),
+        );
       }
     }
   }

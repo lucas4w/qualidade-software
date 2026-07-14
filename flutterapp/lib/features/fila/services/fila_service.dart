@@ -6,13 +6,16 @@ import 'package:flutterapp/features/fila/models/status.dart';
 class FilaService {
   static final Dio _dio = ApiClient.instance;
 
-  static Future<Status> buscarStatus(idFila) async {
+  static Future<Status> buscarStatus(String idFila) async {
     final id = await AuthService().getUserIDLogado();
     try {
-      final response = await _dio.get('usuario/$id/fila/$idFila/status/');
+      final response = await _dio.get<Status>(
+        'usuario/$id/fila/$idFila/status/',
+      );
 
       if (response.statusCode == 200) {
-        final Map<String, dynamic> result = response.data;
+        final Map<String, dynamic> result =
+            response.data as Map<String, dynamic>;
         return Status.fromJson(result);
       } else {
         throw Exception('Erro ao buscar status');
@@ -22,10 +25,10 @@ class FilaService {
     }
   }
 
-  static Future<bool> pularVez(idFila) async {
+  static Future<bool> pularVez(String idFila) async {
     final id = await AuthService().getUserIDLogado();
     try {
-      final response = await _dio.patch(
+      final response = await _dio.patch<dynamic>(
         'usuario/$id/fila/$idFila/',
         data: {'acao': 'pular_vez'},
       );
@@ -39,10 +42,10 @@ class FilaService {
     }
   }
 
-  static Future<bool> sairDaFila(idFila) async {
+  static Future<bool> sairDaFila(String idFila) async {
     final id = await AuthService().getUserIDLogado();
     try {
-      final response = await _dio.delete('usuario/$id/fila/$idFila/');
+      final response = await _dio.delete<dynamic>('usuario/$id/fila/$idFila/');
       if (response.statusCode == 200) {
         return true;
       }

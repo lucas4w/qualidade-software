@@ -9,10 +9,10 @@ class PerfilService {
   static Future<Perfil> buscarPerfil() async {
     final id = await AuthService().getPacienteIDLogado();
     try {
-      final response = await _dio.get('pacientes/$id/');
+      final response = await _dio.get<Map<String, dynamic>>('pacientes/$id/');
 
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> result = response.data;
+      if (response.statusCode == 200 && response.data != null) {
+        final Map<String, dynamic> result = response.data!;
         return Perfil.fromJson(result);
       } else {
         throw Exception('Erro ao buscar perfil');

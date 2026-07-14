@@ -9,12 +9,18 @@ class AgendamentoService {
   static Future<List<Agendamento>> buscarAgendamentos() async {
     final id = await AuthService().getUserIDLogado();
     try {
-      final response = await _dio.get('usuario/$id/agendamento/');
+      final response = await _dio.get<List<dynamic>>(
+        'usuario/$id/agendamento/',
+      );
 
       if (response.statusCode == 200) {
         if (response.data is List) {
-          final List<dynamic> results = response.data;
-          return results.map((json) => Agendamento.fromJson(json)).toList();
+          final List<dynamic> results = List<dynamic>.from(
+            response.data as List,
+          );
+          return results
+              .map((json) => Agendamento.fromJson(json as Map<String, dynamic>))
+              .toList();
         }
         return [];
       } else {
@@ -27,7 +33,7 @@ class AgendamentoService {
 
   static Future<bool> cancelarAgendamento(int id) async {
     try {
-      final response = await _dio.patch('agendamentos/$id/cancelar/');
+      final response = await _dio.patch<dynamic>('agendamentos/$id/cancelar/');
       if (response.statusCode == 200) {
         return true;
       }

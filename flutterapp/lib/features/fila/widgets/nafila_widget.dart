@@ -154,9 +154,9 @@ class NafilaWidget extends StatelessWidget {
             FilledButton(
               onPressed: !(status?.passouVez ?? false)
                   ? () {
-                      showDialog(
+                      showDialog<void>(
                         context: context,
-                        builder: (BuildContext context) {
+                        builder: (context) {
                           return AlertDialog(
                             title: const Text('Pular vez'),
                             content: const Text(
@@ -202,9 +202,9 @@ class NafilaWidget extends StatelessWidget {
             SizedBox(height: 30),
             FilledButton(
               onPressed: () {
-                showDialog(
+                showDialog<void>(
                   context: context,
-                  builder: (BuildContext context) {
+                  builder: (context) {
                     return AlertDialog(
                       title: const Text('Sair da fila'),
                       content: const Text(
@@ -212,9 +212,7 @@ class NafilaWidget extends StatelessWidget {
                       ),
                       actions: [
                         TextButton(
-                          onPressed: () {
-                            onLeave();
-                          },
+                          onPressed: onLeave,
                           child: const Text(
                             'Sair da fila',
                             style: TextStyle(color: AppPallete.danger),
