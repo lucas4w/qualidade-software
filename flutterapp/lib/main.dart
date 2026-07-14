@@ -10,10 +10,10 @@ import 'package:flutterapp/features/notificacoes/services/notificacoes_service.d
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  DatabaseManager.instance.database;
+  await DatabaseManager.instance.database;
   ApiClient.init();
   await FirebaseMessaging.instance.setAutoInitEnabled(true);
-  NotificacoesController.sincronizarContagem();
+  await NotificacoesController.sincronizarContagem();
 
   runApp(MyApp());
 }

@@ -212,9 +212,7 @@ class NafilaWidget extends StatelessWidget {
                       ),
                       actions: [
                         TextButton(
-                          onPressed: () {
-                            onLeave();
-                          },
+                          onPressed: onLeave,
                           child: const Text(
                             'Sair da fila',
                             style: TextStyle(color: AppPallete.danger),

@@ -59,9 +59,7 @@ class _FilaPageState extends State<FilaPage> {
 
     bool success = await FilaService.pularVez(id);
     if (success) {
-      setState(() {
-        _buscarDados();
-      });
+      setState(_buscarDados);
     } else {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

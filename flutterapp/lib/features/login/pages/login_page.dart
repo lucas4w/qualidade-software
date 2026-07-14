@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       await NotificationService().initialize();
-      NotificacoesController.sincronizarContagem();
+      await NotificacoesController.sincronizarContagem();
 
       if (mounted) {
         router.go('/agendamentos');

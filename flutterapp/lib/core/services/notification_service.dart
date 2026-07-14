@@ -94,7 +94,7 @@ class NotificationService {
       await _enviarTokenParaServidor(token);
     }
 
-    NotificacoesController.sincronizarContagem();
+    await NotificacoesController.sincronizarContagem();
 
     _messaging.onTokenRefresh.listen((newToken) async {
       await _enviarTokenParaServidor(newToken);

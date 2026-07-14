@@ -15,11 +15,11 @@ class TokenStorage {
   }
 
   static Future<String?> getAccessToken() async {
-    return await _storage.read(key: _accessTokenKey);
+    return _storage.read(key: _accessTokenKey);
   }
 
   static Future<String?> getRefreshToken() async {
-    return await _storage.read(key: _refreshTokenKey);
+    return _storage.read(key: _refreshTokenKey);
   }
 
   static Future<void> clearTokens() async {

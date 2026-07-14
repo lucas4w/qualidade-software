@@ -13,7 +13,7 @@ class NotificacoesService {
   static Future<List<Notificacao>> buscarNotificacoes() async {
     try {
       final response = await _dio.get<Map<String, dynamic>>('notificacoes/');
-      NotificacoesController.sincronizarContagem();
+      await NotificacoesController.sincronizarContagem();
 
       if (response.statusCode == 200) {
         final Map<String, dynamic>? data = response.data;
@@ -43,7 +43,7 @@ class NotificacoesService {
 
   static Future<void> apagarNotificacao(int id) async {
     await _dio.delete<Map<String, dynamic>>('notificacoes/$id/');
-    NotificacoesController.sincronizarContagem();
+    await NotificacoesController.sincronizarContagem();
   }
 
   static Future<void> apagarTodas() async {
