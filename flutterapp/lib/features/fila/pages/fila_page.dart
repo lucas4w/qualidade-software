@@ -73,7 +73,7 @@ class _FilaPageState extends State<FilaPage> {
     if (id == null) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('ID da fila inválido')),
+          const SnackBar(content: Text('ID inválido')),
         );
       }
       return;
